@@ -1,0 +1,1930 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Practice Platform</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --primary-dark: #3a0ca3;
+            --success: #2ecc71;
+            --danger: #e74c3c;
+            --warning: #f39c12;
+            --info: #3498db;
+            --dark: #2c3e50;
+            --light: #ffffff;
+            --gray: #95a5a6;
+            --gray-light: #f8f9fa;
+            --card-bg: #ffffff;
+            --shadow: rgba(0, 0, 0, 0.05);
+            --radius: 8px;
+            --transition: all 0.3s ease;
+        }
+        
+        .dark-mode {
+            --primary: #5c7cfa;
+            --primary-dark: #4c6ef5;
+            --success: #51cf66;
+            --danger: #ff6b6b;
+            --warning: #ffd43b;
+            --info: #339af0;
+            --dark: #f8f9fa;
+            --light: #121212;
+            --gray: #adb5bd;
+            --gray-light: #1e1e1e;
+            --card-bg: #1e1e1e;
+            --shadow: rgba(0, 0, 0, 0.2);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--light);
+            color: var(--dark);
+            min-height: 100vh;
+            transition: var(--transition);
+            font-size: 14px;
+            line-height: 1.5;
+            padding: 0;
+            margin: 0;
+            width: 100%;
+        }
+        
+        .container {
+            width: 100%;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            padding: 10px;
+        }
+        
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            padding: 15px;
+            border-radius: var(--radius);
+            margin-bottom: 15px;
+            text-align: center;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+        }
+        
+        h1 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 2px;
+        }
+        
+        .logo-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .logo-title i {
+            font-size: 1.4rem;
+            color: #ffd700;
+        }
+        
+        .subtitle {
+            font-size: 0.7rem;
+            opacity: 0.9;
+        }
+        
+        /* Theme Toggle and Home Button */
+        .header-controls {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+        
+        .theme-toggle {
+            width: 35px;
+            height: 18px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            position: relative;
+        }
+        
+        .theme-toggle::before {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 14px;
+            height: 14px;
+            background: white;
+            border-radius: 50%;
+            transition: var(--transition);
+        }
+        
+        .dark-mode .theme-toggle::before {
+            transform: translateX(17px);
+            background: #ffd700;
+        }
+        
+        .home-button {
+            width: 32px;
+            height: 32px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.9rem;
+        }
+        
+        .home-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
+        }
+        
+        .home-button.hidden {
+            display: none;
+        }
+        
+        /* Welcome Screen */
+        .welcome-screen {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 20px;
+            margin-bottom: 15px;
+            text-align: center;
+            border: 2px dashed var(--primary);
+            display: block;
+            width: 100%;
+        }
+        
+        .welcome-screen.hidden {
+            display: none;
+        }
+        
+        .welcome-content {
+            width: 100%;
+            margin: 0 auto;
+        }
+        
+        .welcome-header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .welcome-logo {
+            font-size: 2.5rem;
+            color: var(--primary);
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .welcome-text h2 {
+            color: var(--primary);
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+        }
+        
+        .welcome-text p {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+        
+        .test-instructions {
+            text-align: left;
+            background: var(--gray-light);
+            padding: 15px;
+            border-radius: var(--radius);
+            margin: 15px 0;
+            font-size: 0.85rem;
+            width: 100%;
+        }
+        
+        .test-instructions h3 {
+            color: var(--primary);
+            margin-bottom: 10px;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .instructions-list {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        
+        .instructions-list li {
+            margin-bottom: 8px;
+            padding-left: 25px;
+            position: relative;
+            font-size: 0.8rem;
+        }
+        
+        .instructions-list li i {
+            position: absolute;
+            left: 0;
+            top: 2px;
+            color: var(--primary);
+            font-size: 0.9rem;
+        }
+        
+        .start-test-btn {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 15px;
+            font-size: 1rem;
+            box-shadow: 0 4px 15px rgba(67, 97, 238, 0.3);
+        }
+        
+        .start-test-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(67, 97, 238, 0.4);
+        }
+        
+        /* Test Selection Modal */
+        .test-selection-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
+        }
+        
+        .test-selection-modal.show {
+            display: flex;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .test-selection-content {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 15px;
+            width: 100%;
+            max-width: 500px;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .test-selection-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--gray-light);
+        }
+        
+        .test-selection-header h2 {
+            color: var(--primary);
+            font-size: 1rem;
+        }
+        
+        .close-modal-btn {
+            background: none;
+            border: none;
+            font-size: 1.1rem;
+            color: var(--gray);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .close-modal-btn:hover {
+            color: var(--danger);
+        }
+        
+        /* Subject Folders */
+        .subject-folders {
+            margin-bottom: 20px;
+        }
+        
+        .subject-folder {
+            background: var(--gray-light);
+            border-radius: var(--radius);
+            margin-bottom: 10px;
+            overflow: hidden;
+            border: 1px solid var(--gray-light);
+        }
+        
+        .folder-header {
+            padding: 12px 15px;
+            background: var(--primary);
+            color: white;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: var(--transition);
+        }
+        
+        .folder-header:hover {
+            background: var(--primary-dark);
+        }
+        
+        .folder-header h3 {
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .folder-toggle {
+            transition: var(--transition);
+        }
+        
+        .folder-toggle.rotated {
+            transform: rotate(90deg);
+        }
+        
+        .test-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 10px;
+            padding: 10px;
+            display: none;
+        }
+        
+        .test-grid.show {
+            display: grid;
+            animation: slideDown 0.3s ease;
+        }
+        
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .test-card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 12px;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 2px solid transparent;
+            text-align: center;
+            box-shadow: 0 2px 5px var(--shadow);
+        }
+        
+        .test-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px var(--shadow);
+        }
+        
+        .test-card.active {
+            border-color: var(--primary);
+            background: rgba(67, 97, 238, 0.1);
+        }
+        
+        .test-card h4 {
+            font-size: 0.9rem;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+        
+        .test-card p {
+            font-size: 0.75rem;
+            color: var(--gray);
+        }
+        
+        .test-card .test-meta {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 6px;
+            font-size: 0.7rem;
+        }
+        
+        /* Test Info */
+        .test-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 10px 12px;
+            border-radius: var(--radius);
+            margin-bottom: 12px;
+            border: 1px solid var(--gray-light);
+            flex-wrap: wrap;
+            gap: 8px;
+            display: none;
+            width: 100%;
+        }
+        
+        .question-counter {
+            font-weight: 600;
+            color: var(--primary);
+            font-size: 0.9rem;
+        }
+        
+        /* Quick Stats */
+        .quick-stats {
+            display: flex;
+            gap: 8px;
+            font-size: 0.8rem;
+        }
+        
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            background: var(--gray-light);
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+        }
+        
+        /* Main Question Card */
+        .question-card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 15px;
+            margin-bottom: 12px;
+            border: 1px solid var(--gray-light);
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            display: none;
+            width: 100%;
+        }
+        
+        /* Question Header */
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--gray-light);
+            width: 100%;
+        }
+        
+        .question-number {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        .question-id {
+            font-family: 'Courier New', monospace;
+            font-size: 0.8rem;
+            color: var(--gray);
+        }
+        
+        /* Question Text */
+        .question-text {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 15px;
+            line-height: 1.5;
+            padding: 12px;
+            background: var(--gray-light);
+            border-radius: 8px;
+            border-left: 4px solid var(--primary);
+            min-height: 70px;
+            display: flex;
+            align-items: center;
+            width: 100%;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+        
+        /* Options */
+        .options-container {
+            margin-bottom: 15px;
+            width: 100%;
+        }
+        
+        .option {
+            padding: 10px 12px;
+            margin-bottom: 6px;
+            background: var(--gray-light);
+            border-radius: 6px;
+            border: 1px solid transparent;
+            transition: var(--transition);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            position: relative;
+            min-height: 50px;
+            width: 100%;
+        }
+        
+        .option:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .option-label {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            background: var(--dark);
+            color: var(--light);
+            border-radius: 50%;
+            font-weight: 700;
+            margin-right: 10px;
+            font-size: 0.8rem;
+            flex-shrink: 0;
+        }
+        
+        .option-text {
+            font-weight: 500;
+            font-size: 0.9rem;
+            line-height: 1.4;
+            flex-grow: 1;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            width: 100%;
+        }
+        
+        /* Small tick/cross icon */
+        .option-status {
+            width: 18px;
+            height: 18px;
+            margin-left: 8px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .correct-tick {
+            color: var(--success);
+            font-size: 0.8rem;
+        }
+        
+        .wrong-cross {
+            color: var(--danger);
+            font-size: 0.8rem;
+        }
+        
+        /* Highlight correct answer */
+        .correct-answer {
+            background: rgba(46, 204, 113, 0.12);
+            border-color: var(--success);
+        }
+        
+        /* User selection styles */
+        .option.user-selected.correct {
+            background: rgba(46, 204, 113, 0.15);
+            border-color: var(--success);
+        }
+        
+        .option.user-selected.wrong {
+            background: rgba(231, 76, 60, 0.15);
+            border-color: var(--danger);
+        }
+        
+        /* Correct Answer Box */
+        .answer-box {
+            background: rgba(46, 204, 113, 0.12);
+            border: 1px solid var(--success);
+            border-radius: 8px;
+            padding: 10px 12px;
+            margin-top: 12px;
+            display: none;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85rem;
+            animation: fadeIn 0.3s ease;
+            width: 100%;
+        }
+        
+        .answer-box.show {
+            display: flex;
+        }
+        
+        /* STYLISH SOLUTION SECTION */
+        .solution-section {
+            background: linear-gradient(135deg, #f8f9ff 0%, #eef2ff 100%);
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 15px;
+            border: 2px solid var(--primary);
+            display: none;
+            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.15);
+            position: relative;
+            width: 100%;
+        }
+        
+        .dark-mode .solution-section {
+            background: linear-gradient(135deg, #1e293b 0%, #2d3748 100%);
+        }
+        
+        .solution-section.show {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .solution-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--primary);
+            width: 100%;
+        }
+        
+        .solution-title {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 1rem;
+        }
+        
+        .toggle-solution-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            font-size: 0.8rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            padding: 6px 12px;
+            border-radius: 4px;
+            transition: var(--transition);
+            font-weight: 600;
+        }
+        
+        .toggle-solution-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+        
+        /* STYLISH SOLUTION CONTENT */
+        .solution-content {
+            font-size: 0.9rem;
+            color: var(--dark);
+            line-height: 1.5;
+            font-weight: 500;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 8px;
+            border-left: 4px solid var(--primary);
+            width: 100%;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+        
+        .dark-mode .solution-content {
+            background: rgba(30, 41, 59, 0.5);
+            color: #e2e8f0;
+        }
+        
+        /* COMPACT NAVIGATION */
+        .compact-nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 6px;
+            margin-top: 15px;
+            padding-top: 10px;
+            border-top: 1px solid var(--gray-light);
+            display: none;
+            width: 100%;
+        }
+        
+        .nav-btn {
+            padding: 8px 14px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 0.85rem;
+            white-space: nowrap;
+            flex: 1;
+            justify-content: center;
+        }
+        
+        .nav-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+        
+        .nav-btn:disabled {
+            background: var(--gray);
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        /* Jump Section */
+        .jump-section {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            flex: 1;
+            justify-content: center;
+        }
+        
+        .jump-input {
+            width: 45px;
+            padding: 6px;
+            border: 1px solid var(--gray);
+            border-radius: 4px;
+            background: var(--card-bg);
+            color: var(--dark);
+            text-align: center;
+            font-size: 0.85rem;
+        }
+        
+        .jump-btn {
+            padding: 6px 10px;
+            background: var(--warning);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.85rem;
+        }
+        
+        .jump-btn:hover {
+            background: #e67e22;
+        }
+        
+        /* Footer */
+        .footer {
+            text-align: center;
+            margin-top: 10px;
+            padding: 8px;
+            color: var(--gray);
+            font-size: 0.7rem;
+            border-top: 1px solid var(--gray-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            width: 100%;
+        }
+        
+        .footer-logo {
+            color: var(--primary);
+            font-size: 0.8rem;
+        }
+        
+        /* Loading */
+        .loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 150px;
+            width: 100%;
+        }
+        
+        .spinner {
+            width: 35px;
+            height: 35px;
+            border: 4px solid rgba(67, 97, 238, 0.2);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Desktop view */
+        @media (min-width: 768px) {
+            .container {
+                max-width: 900px;
+                padding: 15px;
+            }
+            
+            .header {
+                padding: 18px;
+            }
+            
+            h1 {
+                font-size: 1.4rem;
+            }
+            
+            .logo-title i {
+                font-size: 1.6rem;
+            }
+            
+            .subtitle {
+                font-size: 0.8rem;
+            }
+            
+            .welcome-screen {
+                padding: 25px;
+            }
+            
+            .welcome-header {
+                flex-direction: row;
+            }
+            
+            .welcome-logo {
+                font-size: 3.2rem;
+            }
+            
+            .welcome-text h2 {
+                font-size: 2rem;
+            }
+            
+            .test-instructions {
+                padding: 20px;
+            }
+            
+            .instructions-list li {
+                font-size: 0.9rem;
+            }
+            
+            .subject-folder {
+                margin-bottom: 15px;
+            }
+            
+            .folder-header {
+                padding: 15px;
+            }
+            
+            .test-grid {
+                grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+                padding: 15px;
+            }
+            
+            .question-text {
+                font-size: 1.1rem;
+                padding: 15px;
+            }
+            
+            .option {
+                padding: 12px 15px;
+                min-height: 60px;
+            }
+            
+            .option-text {
+                font-size: 1rem;
+            }
+            
+            .nav-btn {
+                padding: 10px 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="logo-title">
+                <i class="fas fa-book-open"></i>
+                <div>
+                    <h1>Premium Test Series</h1>
+                    <p class="subtitle">Practice. Learn. Improve.</p>
+                </div>
+            </div>
+            
+            <!-- Header Controls (Theme & Home Button) -->
+            <div class="header-controls">
+                <div class="theme-toggle" id="themeToggle"></div>
+                <div class="home-button hidden" id="homeButton">
+                    <i class="fas fa-home"></i>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Welcome Screen -->
+        <div class="welcome-screen" id="welcomeScreen">
+            <div class="welcome-content">
+                <div class="welcome-header">
+                    <div class="welcome-logo">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <div class="welcome-text">
+                        <h2>Welcome to Test Practice Platform</h2>
+                        <p>Your gateway to mastering competitive exams</p>
+                    </div>
+                </div>
+                
+                <div class="test-instructions">
+                    <h3><i class="fas fa-info-circle"></i> How to use this platform:</h3>
+                    <ul class="instructions-list">
+                        <li><i class="fas fa-check-circle"></i> Select a subject folder</li>
+                        <li><i class="fas fa-check-circle"></i> Choose a test from available options</li>
+                        <li><i class="fas fa-check-circle"></i> Answer multiple choice questions</li>
+                        <li><i class="fas fa-check-circle"></i> Review detailed solutions for each question</li>
+                        <li><i class="fas fa-check-circle"></i> Track your progress with real-time statistics</li>
+                        <li><i class="fas fa-check-circle"></i> Switch between light and dark modes</li>
+                    </ul>
+                </div>
+                
+                <button class="start-test-btn" id="startTestBtn">
+                    <i class="fas fa-play-circle"></i>
+                    Browse Subjects & Start Test
+                </button>
+            </div>
+        </div>
+        
+        <!-- Test Info -->
+        <div class="test-info" id="testInfo">
+            <div class="question-counter" id="questionCounter">
+                Q: 1/0
+            </div>
+            <div class="quick-stats">
+                <div class="stat-item" style="color: var(--success);">
+                    <i class="fas fa-check"></i>
+                    <span id="correctCount">0</span>
+                </div>
+                <div class="stat-item" style="color: var(--danger);">
+                    <i class="fas fa-times"></i>
+                    <span id="wrongCount">0</span>
+                </div>
+                <div class="stat-item" style="color: var(--primary);">
+                    <i class="fas fa-clock"></i>
+                    <span id="attemptedCount">0</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Main Question Card -->
+        <div class="question-card" id="questionCard">
+            <!-- Question will be loaded here -->
+        </div>
+        
+        <!-- COMPACT NAVIGATION -->
+        <div class="compact-nav" id="compactNav">
+            <button class="nav-btn" id="prevBtn">
+                <i class="fas fa-chevron-left"></i>
+                Back
+            </button>
+            
+            <div class="jump-section">
+                <input type="number" id="jumpInput" class="jump-input" placeholder="#" min="1">
+                <button class="jump-btn" id="jumpBtn">Jump</button>
+            </div>
+            
+            <button class="nav-btn" id="nextBtn">
+                Next
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+        
+        <!-- Footer -->
+        <div class="footer" id="footer">
+            <div class="footer-logo">
+                <i class="fas fa-book"></i>
+            </div>
+            <p>Premium Test Series © 2024 | Practice Makes Perfect</p>
+        </div>
+    </div>
+
+    <!-- Test Selection Modal -->
+    <div class="test-selection-modal" id="testSelectionModal">
+        <div class="test-selection-content">
+            <div class="test-selection-header">
+                <h2>Select Subject and Test</h2>
+                <button class="close-modal-btn" id="closeModalBtn">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div id="subjectListContainer">
+                <!-- Subject folders will be loaded here -->
+                <div class="loading">
+                    <div class="spinner"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Theme Management
+        const themeToggle = document.getElementById('themeToggle');
+        const homeButton = document.getElementById('homeButton');
+        const body = document.body;
+        
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        if (savedTheme === 'dark') {
+            body.classList.add('dark-mode');
+        }
+        
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            const currentTheme = body.classList.contains('dark-mode') ? 'dark' : 'light';
+            localStorage.setItem('theme', currentTheme);
+        });
+        
+        // App State
+        let currentQuestions = [];
+        let currentQuestionIndex = 0;
+        let userAnswers = {};
+        let availableSubjects = {};
+        let currentTest = null;
+        let testStarted = false;
+        let openedFolders = new Set(); // Track opened folders
+        
+        // DOM Elements
+        const welcomeScreen = document.getElementById('welcomeScreen');
+        const startTestBtn = document.getElementById('startTestBtn');
+        const testInfo = document.getElementById('testInfo');
+        const questionCounter = document.getElementById('questionCounter');
+        const correctCount = document.getElementById('correctCount');
+        const wrongCount = document.getElementById('wrongCount');
+        const attemptedCount = document.getElementById('attemptedCount');
+        const questionCard = document.getElementById('questionCard');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const jumpInput = document.getElementById('jumpInput');
+        const jumpBtn = document.getElementById('jumpBtn');
+        const testSelectionModal = document.getElementById('testSelectionModal');
+        const closeModalBtn = document.getElementById('closeModalBtn');
+        const subjectListContainer = document.getElementById('subjectListContainer');
+        const compactNav = document.getElementById('compactNav');
+        const footer = document.getElementById('footer');
+        
+        // GitHub Repo Details
+        const GITHUB_USERNAME = 'mrsargio';
+        const GITHUB_REPO = 'Utkk';
+        const MAIN_TEST_FOLDER = 'test';
+        
+        // Subject icons and colors for different subjects
+        const SUBJECT_ICONS = {
+            'psychology': 'fas fa-brain',
+            'mathematics': 'fas fa-calculator',
+            'maths': 'fas fa-calculator',
+            'computer': 'fas fa-laptop-code',
+            'computer-science': 'fas fa-laptop-code',
+            'physics': 'fas fa-atom',
+            'chemistry': 'fas fa-flask',
+            'history': 'fas fa-landmark',
+            'rajasthan-history': 'fas fa-landmark',
+            'polity': 'fas fa-balance-scale',
+            'economics': 'fas fa-chart-line',
+            'english': 'fas fa-language',
+            'gk': 'fas fa-globe',
+            'general-knowledge': 'fas fa-globe',
+            'current-affairs': 'fas fa-newspaper',
+            'reasoning': 'fas fa-puzzle-piece',
+            'biology': 'fas fa-dna',
+            'geography': 'fas fa-globe-asia',
+            'science': 'fas fa-flask',
+            'aptitude': 'fas fa-lightbulb',
+            'quantitative': 'fas fa-chart-bar',
+            'verbal': 'fas fa-comment-alt',
+            'logical': 'fas fa-project-diagram'
+        };
+        
+        // Color palette for subjects
+        const SUBJECT_COLORS = [
+            '#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FFEAA7',
+            '#DDA0DD', '#98D8C8', '#F7DC6F', '#BB8FCE', '#F1948A',
+            '#85C1E9', '#F8C471', '#82E0AA', '#F5B7B1', '#AED6F1',
+            '#D7BDE2', '#F9E79F', '#A2D9CE', '#FAD7A0', '#D5DBDB'
+        ];
+        
+        // Get icon for subject
+        function getSubjectIcon(subjectName) {
+            const key = subjectName.toLowerCase().replace(/[^a-z]/g, '-');
+            for (const [pattern, icon] of Object.entries(SUBJECT_ICONS)) {
+                if (key.includes(pattern)) {
+                    return icon;
+                }
+            }
+            return 'fas fa-folder'; // Default icon
+        }
+        
+        // Get color for subject
+        function getSubjectColor(subjectName) {
+            // Simple hash function to get consistent color for same subject
+            let hash = 0;
+            for (let i = 0; i < subjectName.length; i++) {
+                hash = subjectName.charCodeAt(i) + ((hash << 5) - hash);
+            }
+            const index = Math.abs(hash) % SUBJECT_COLORS.length;
+            return SUBJECT_COLORS[index];
+        }
+        
+        // Format subject name
+        function formatSubjectName(folderName) {
+            return folderName
+                .replace(/-/g, ' ')
+                .replace(/\b\w/g, l => l.toUpperCase())
+                .replace(/\bGk\b/i, 'GK')
+                .replace(/\bAnd\b/i, '&');
+        }
+        
+        // Show/Hide elements based on test state
+        function updateTestState() {
+            if (testStarted && currentTest) {
+                // Test is active - show test interface
+                welcomeScreen.classList.add('hidden');
+                testInfo.style.display = 'flex';
+                questionCard.style.display = 'flex';
+                compactNav.style.display = 'flex';
+                footer.style.display = 'flex';
+                homeButton.classList.remove('hidden');
+            } else {
+                // No test active - show welcome screen
+                welcomeScreen.classList.remove('hidden');
+                testInfo.style.display = 'none';
+                questionCard.style.display = 'none';
+                compactNav.style.display = 'none';
+                footer.style.display = 'none';
+                homeButton.classList.add('hidden');
+                
+                // Clear ALL test data completely
+                resetTestData();
+            }
+        }
+        
+        // Reset all test data
+        function resetTestData() {
+            currentQuestions = [];
+            currentQuestionIndex = 0;
+            userAnswers = {};
+            currentTest = null;
+            testStarted = false;
+            
+            // Clear question card content
+            questionCard.innerHTML = '';
+            
+            // Reset stats
+            questionCounter.textContent = 'Q: 1/0';
+            correctCount.textContent = '0';
+            wrongCount.textContent = '0';
+            attemptedCount.textContent = '0';
+            
+            // Clear localStorage
+            localStorage.removeItem('lastTest');
+        }
+        
+        // Load available subjects and tests from GitHub - AUTOMATIC DETECTION
+        async function loadAvailableSubjects() {
+            try {
+                showSubjectLoading(true);
+                availableSubjects = {};
+                
+                // First, get all folders inside test/ directory
+                const testFolderUrl = `https://api.github.com/repos/${GITHUB_USERNAME}/${GITHUB_REPO}/contents/${MAIN_TEST_FOLDER}`;
+                console.log('Fetching test folder:', testFolderUrl);
+                
+                const response = await fetch(testFolderUrl);
+                
+                if (!response.ok) {
+                    throw new Error(`Failed to access test folder: ${response.status}`);
+                }
+                
+                const items = await response.json();
+                console.log('Items in test folder:', items);
+                
+                // Filter only directories (folders)
+                const subjectFolders = items.filter(item => item.type === 'dir');
+                console.log('Subject folders found:', subjectFolders);
+                
+                if (subjectFolders.length === 0) {
+                    subjectListContainer.innerHTML = `
+                        <div style="text-align: center; padding: 20px; color: var(--gray);">
+                            <i class="fas fa-exclamation-circle" style="font-size: 2rem; margin-bottom: 10px;"></i>
+                            <p>No subject folders found in 'test/' directory</p>
+                            <p style="font-size: 0.8rem; margin-top: 10px;">Create folders in the 'test/' directory</p>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                // Load tests for each subject folder
+                const subjectPromises = subjectFolders.map(async (folder) => {
+                    try {
+                        const subjectApiUrl = `https://api.github.com/repos/${GITHUB_USERNAME}/${GITHUB_REPO}/contents/${MAIN_TEST_FOLDER}/${folder.name}`;
+                        console.log(`Fetching tests for ${folder.name}:`, subjectApiUrl);
+                        
+                        const subjectResponse = await fetch(subjectApiUrl);
+                        
+                        if (subjectResponse.ok) {
+                            const files = await subjectResponse.json();
+                            
+                            // Filter only JSON files
+                            const testFiles = files.filter(file => 
+                                file.name.toLowerCase().endsWith('.json') && 
+                                file.type === 'file'
+                            );
+                            
+                            console.log(`Found ${testFiles.length} tests in ${folder.name}`);
+                            
+                            if (testFiles.length > 0) {
+                                const formattedName = formatSubjectName(folder.name);
+                                
+                                availableSubjects[folder.name] = {
+                                    name: formattedName,
+                                    folder: folder.name,
+                                    icon: getSubjectIcon(folder.name),
+                                    color: getSubjectColor(folder.name),
+                                    tests: testFiles.map(file => ({
+                                        name: file.name,
+                                        download_url: file.download_url,
+                                        path: file.path,
+                                        size: (file.size / 1024).toFixed(1) + ' KB',
+                                        fullPath: file.path
+                                    }))
+                                };
+                            }
+                        } else {
+                            console.log(`No tests found in ${folder.name}`);
+                        }
+                    } catch (error) {
+                        console.log(`Error loading ${folder.name}:`, error.message);
+                    }
+                });
+                
+                await Promise.all(subjectPromises);
+                
+                // Display subject list
+                displaySubjectList();
+                
+            } catch (error) {
+                console.error('Error loading subjects:', error);
+                subjectListContainer.innerHTML = `
+                    <div style="text-align: center; padding: 20px; color: var(--gray);">
+                        <i class="fas fa-exclamation-triangle" style="font-size: 2rem; margin-bottom: 10px;"></i>
+                        <p>Error loading subjects: ${error.message}</p>
+                        <p style="font-size: 0.8rem; margin-top: 10px;">Please check your GitHub repository structure</p>
+                        <button onclick="loadAvailableSubjects()" style="margin-top: 10px; padding: 8px 15px; background: var(--primary); color: white; border: none; border-radius: 4px; cursor: pointer;">
+                            <i class="fas fa-redo"></i> Retry
+                        </button>
+                    </div>
+                `;
+            } finally {
+                showSubjectLoading(false);
+            }
+        }
+        
+        // Display subject list in modal
+        function displaySubjectList() {
+            const subjects = Object.values(availableSubjects);
+            
+            if (subjects.length === 0) {
+                subjectListContainer.innerHTML = `
+                    <div style="text-align: center; padding: 20px; color: var(--gray);">
+                        <i class="fas fa-folder-open" style="font-size: 2rem; margin-bottom: 10px;"></i>
+                        <p>No test files found in subject folders</p>
+                        <p style="font-size: 0.8rem; margin-top: 10px;">Add JSON test files to your subject folders</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            let subjectFoldersHtml = '';
+            
+            subjects.forEach(subject => {
+                const isOpened = openedFolders.has(subject.folder);
+                const tests = subject.tests || [];
+                
+                // Create test cards HTML
+                let testCardsHtml = '';
+                if (tests.length > 0) {
+                    tests.forEach(test => {
+                        const isActive = currentTest && currentTest.name === test.name && currentTest.subject === subject.name;
+                        testCardsHtml += `
+                            <div class="test-card ${isActive ? 'active' : ''}" 
+                                 data-test-url="${test.download_url}" 
+                                 data-test-path="${test.path}"
+                                 data-test-name="${test.name}"
+                                 data-subject="${subject.name}">
+                                <h4>${test.name.replace('.json', '').replace(/_/g, ' ').replace(/test-?/i, 'Test ')}</h4>
+                                <p>${test.size || 'Size not available'}</p>
+                                <div class="test-meta">
+                                    <span><i class="fas fa-question-circle"></i> MCQ Test</span>
+                                </div>
+                            </div>
+                        `;
+                    });
+                } else {
+                    testCardsHtml = `
+                        <div style="text-align: center; padding: 20px; color: var(--gray); font-size: 0.85rem;">
+                            <i class="fas fa-file-alt"></i>
+                            <p>No test files in this folder</p>
+                        </div>
+                    `;
+                }
+                
+                subjectFoldersHtml += `
+                    <div class="subject-folder">
+                        <div class="folder-header" data-folder="${subject.folder}" 
+                             style="background: ${subject.color};">
+                            <h3>
+                                <i class="${subject.icon}"></i>
+                                ${subject.name}
+                                <span style="font-size: 0.8rem; opacity: 0.9; margin-left: 10px;">
+                                    (${tests.length} ${tests.length === 1 ? 'test' : 'tests'})
+                                </span>
+                            </h3>
+                            <i class="fas fa-chevron-right folder-toggle ${isOpened ? 'rotated' : ''}"></i>
+                        </div>
+                        <div class="test-grid ${isOpened ? 'show' : ''}" id="testGrid-${subject.folder}">
+                            ${testCardsHtml}
+                        </div>
+                    </div>
+                `;
+            });
+            
+            subjectListContainer.innerHTML = `
+                <div style="margin-bottom: 10px; color: var(--gray); font-size: 0.85rem;">
+                    <i class="fas fa-info-circle"></i> Found ${subjects.length} subject${subjects.length === 1 ? '' : 's'} with tests
+                </div>
+                <div class="subject-folders">
+                    ${subjectFoldersHtml}
+                </div>
+            `;
+            
+            // Add click event to folder headers
+            document.querySelectorAll('.folder-header').forEach(header => {
+                header.addEventListener('click', () => {
+                    const folder = header.dataset.folder;
+                    const testGrid = document.getElementById(`testGrid-${folder}`);
+                    const toggleIcon = header.querySelector('.folder-toggle');
+                    
+                    if (openedFolders.has(folder)) {
+                        openedFolders.delete(folder);
+                        testGrid.classList.remove('show');
+                        toggleIcon.classList.remove('rotated');
+                    } else {
+                        openedFolders.add(folder);
+                        testGrid.classList.add('show');
+                        toggleIcon.classList.add('rotated');
+                    }
+                });
+            });
+            
+            // Add click event to test cards
+            document.querySelectorAll('.test-card').forEach(card => {
+                card.addEventListener('click', () => {
+                    const testUrl = card.dataset.testUrl;
+                    const testPath = card.dataset.testPath;
+                    const testName = card.dataset.testName;
+                    const subject = card.dataset.subject;
+                    loadTest(testUrl, testPath, testName, subject);
+                });
+            });
+        }
+        
+        // Load a specific test
+        async function loadTest(testUrl, testPath, testName, subject) {
+            showLoading(true);
+            userAnswers = {};
+            
+            try {
+                console.log('Loading test:', testName);
+                console.log('From URL:', testUrl);
+                console.log('Path:', testPath);
+                
+                let response;
+                
+                // Try direct URL first
+                try {
+                    response = await fetch(testUrl);
+                    if (!response.ok) throw new Error('Direct URL failed');
+                } catch (e) {
+                    // If direct URL fails, try raw.githubusercontent.com URL
+                    const rawUrl = `https://raw.githubusercontent.com/${GITHUB_USERNAME}/${GITHUB_REPO}/main/${testPath}`;
+                    console.log('Trying raw URL:', rawUrl);
+                    response = await fetch(rawUrl);
+                }
+                
+                if (!response.ok) {
+                    throw new Error(`Failed to load test: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                
+                if (!Array.isArray(data)) {
+                    throw new Error('Test data is not an array');
+                }
+                
+                processTestData(data, testName, testUrl, subject);
+                
+            } catch (error) {
+                console.error('Error loading test:', error);
+                alert(`Failed to load test "${testName}". Please try another.\nError: ${error.message}`);
+                showLoading(false);
+            }
+        }
+        
+        function processTestData(data, testName, testUrl, subject) {
+            currentQuestions = data;
+            currentQuestionIndex = 0;
+            currentTest = { 
+                name: testName, 
+                url: testUrl, 
+                subject: subject 
+            };
+            testStarted = true;
+            
+            // Initialize user answers
+            currentQuestions.forEach((_, index) => {
+                userAnswers[index] = {
+                    selected: null,
+                    isCorrect: false,
+                    showSolution: false
+                };
+            });
+            
+            // Close modal
+            testSelectionModal.classList.remove('show');
+            
+            // Update UI
+            updateTestState();
+            
+            // Display first question
+            displayQuestion(0);
+            updateStats();
+            
+            // Save to localStorage
+            localStorage.setItem('lastTest', JSON.stringify({
+                name: testName,
+                url: testUrl,
+                subject: subject,
+                timestamp: Date.now()
+            }));
+            
+            showLoading(false);
+        }
+        
+        // Load last used test from localStorage
+        function loadLastTest() {
+            const lastTest = localStorage.getItem('lastTest');
+            if (lastTest) {
+                try {
+                    const testData = JSON.parse(lastTest);
+                    // Don't auto-load on page load, just clear old data
+                    localStorage.removeItem('lastTest');
+                } catch (error) {
+                    console.error('Error loading last test:', error);
+                    localStorage.removeItem('lastTest');
+                }
+            }
+        }
+        
+        // Display question
+        function displayQuestion(index) {
+            if (index < 0 || index >= currentQuestions.length) {
+                return;
+            }
+            
+            currentQuestionIndex = index;
+            const question = currentQuestions[index];
+            const userAnswer = userAnswers[index];
+            
+            // Update counter
+            questionCounter.textContent = `Q: ${index + 1}/${currentQuestions.length}`;
+            
+            // Clean HTML entities
+            const cleanText = (text) => {
+                if (!text) return '';
+                return text
+                    .replace(/&nbsp;/g, ' ')
+                    .replace(/<br\s*\/?>/gi, '\n')
+                    .replace(/<[^>]*>/g, '')
+                    .replace(/&lsquo;/g, "'")
+                    .replace(/&rsquo;/g, "'")
+                    .replace(/&ldquo;/g, '"')
+                    .replace(/&rdquo;/g, '"')
+                    .replace(/&amp;/g, '&')
+                    .replace(/&lt;/g, '<')
+                    .replace(/&gt;/g, '>')
+                    .replace(/\s+/g, ' ')
+                    .trim();
+            };
+            
+            // Get correct answer
+            const correctAnswer = parseInt(question.answer);
+            let correctOptionText = '';
+            if (correctAnswer === 1) correctOptionText = cleanText(question.option_1);
+            else if (correctAnswer === 2) correctOptionText = cleanText(question.option_2);
+            else if (correctAnswer === 3) correctOptionText = cleanText(question.option_3);
+            else if (correctAnswer === 4) correctOptionText = cleanText(question.option_4);
+            else if (correctAnswer === 5) correctOptionText = cleanText(question.option_5);
+            
+            // Create options HTML
+            let optionsHtml = '';
+            for (let i = 1; i <= 5; i++) {
+                const optionText = cleanText(question[`option_${i}`]);
+                if (!optionText) continue;
+                
+                const isSelected = userAnswer.selected === i;
+                const isCorrect = correctAnswer === i;
+                let optionClass = 'option';
+                let statusIcon = '';
+                
+                if (userAnswer.selected !== null) {
+                    if (isSelected) {
+                        optionClass += isCorrect ? ' user-selected correct' : ' user-selected wrong';
+                        statusIcon = isCorrect 
+                            ? '<div class="option-status"><i class="fas fa-check correct-tick"></i></div>' 
+                            : '<div class="option-status"><i class="fas fa-times wrong-cross"></i></div>';
+                    } else if (isCorrect) {
+                        optionClass += ' correct-answer';
+                        statusIcon = '<div class="option-status"><i class="fas fa-check correct-tick"></i></div>';
+                    }
+                }
+                
+                optionsHtml += `
+                    <div class="${optionClass}" data-option="${i}">
+                        <span class="option-label">${i}</span>
+                        <span class="option-text">${optionText}</span>
+                        ${statusIcon}
+                    </div>
+                `;
+            }
+            
+            // Create answer box if answered
+            let answerBoxHtml = '';
+            if (userAnswer.selected !== null) {
+                answerBoxHtml = `
+                    <div class="answer-box show">
+                        <i class="fas fa-info-circle" style="color: var(--success);"></i>
+                        <span><strong>Correct Answer:</strong> Option ${correctAnswer}: ${correctOptionText}</span>
+                    </div>
+                `;
+            }
+            
+            // Create STYLISH solution section
+            let solutionHtml = '';
+            const solutionContent = cleanText(question.description) || 'No solution available';
+            solutionHtml = `
+                <div class="solution-section ${userAnswer.showSolution ? 'show' : ''}" id="solutionSection">
+                    <div class="solution-header">
+                        <div class="solution-title">
+                            <i class="fas fa-lightbulb"></i>
+                            <span>Solution</span>
+                        </div>
+                        <button class="toggle-solution-btn" onclick="toggleSolution(${index})">
+                            <i class="fas fa-${userAnswer.showSolution ? 'chevron-up' : 'chevron-down'}"></i>
+                            ${userAnswer.showSolution ? 'Hide' : 'Show'} Solution
+                        </button>
+                    </div>
+                    ${userAnswer.showSolution ? `
+                    <div class="solution-content">
+                        ${solutionContent}
+                    </div>
+                    ` : ''}
+                </div>
+            `;
+            
+            questionCard.innerHTML = `
+                <div class="question-header">
+                    <div class="question-number">Question ${index + 1}</div>
+                    <div class="question-id">ID: ${question.id}</div>
+                </div>
+                
+                <div class="question-text" id="questionText">
+                    ${cleanText(question.question)}
+                </div>
+                
+                <div class="options-container">
+                    ${optionsHtml}
+                </div>
+                
+                ${answerBoxHtml}
+                
+                ${solutionHtml}
+            `;
+            
+            // Add click event to options
+            document.querySelectorAll('.option').forEach(option => {
+                option.addEventListener('click', () => {
+                    const selectedOption = parseInt(option.dataset.option);
+                    selectAnswer(index, selectedOption);
+                });
+            });
+            
+            // Update navigation buttons
+            updateNavigationButtons();
+            updateStats();
+            
+            // Scroll to top of question card when loading new question
+            setTimeout(() => {
+                questionCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 50);
+        }
+        
+        // Select answer
+        function selectAnswer(questionIndex, optionNumber) {
+            const question = currentQuestions[questionIndex];
+            const correctAnswer = parseInt(question.answer);
+            const isCorrect = optionNumber === correctAnswer;
+            
+            userAnswers[questionIndex] = {
+                selected: optionNumber,
+                isCorrect: isCorrect,
+                showSolution: true // Show solution when answered
+            };
+            
+            // Re-render question to show result
+            displayQuestion(questionIndex);
+            updateStats();
+            
+            // Scroll to solution section after a short delay
+            setTimeout(() => {
+                const solutionSection = document.getElementById('solutionSection');
+                if (solutionSection) {
+                    solutionSection.scrollIntoView({ 
+                        behavior: 'smooth', 
+                        block: 'start' 
+                    });
+                }
+            }, 100);
+        }
+        
+        // Toggle solution visibility
+        window.toggleSolution = function(questionIndex) {
+            userAnswers[questionIndex].showSolution = !userAnswers[questionIndex].showSolution;
+            displayQuestion(questionIndex);
+            
+            // Scroll to solution section when showing
+            if (userAnswers[questionIndex].showSolution) {
+                setTimeout(() => {
+                    const solutionSection = document.getElementById('solutionSection');
+                    if (solutionSection) {
+                        solutionSection.scrollIntoView({ 
+                            behavior: 'smooth', 
+                            block: 'start' 
+                        });
+                    }
+                }, 50);
+            } else {
+                // Scroll to question when hiding solution
+                setTimeout(() => {
+                    const questionText = document.getElementById('questionText');
+                    if (questionText) {
+                        questionText.scrollIntoView({ 
+                            behavior: 'smooth', 
+                            block: 'start' 
+                        });
+                    }
+                }, 50);
+            }
+        }
+        
+        // Update stats
+        function updateStats() {
+            let correct = 0;
+            let wrong = 0;
+            let attempted = 0;
+            
+            Object.values(userAnswers).forEach(answer => {
+                if (answer.selected !== null) {
+                    attempted++;
+                    if (answer.isCorrect) {
+                        correct++;
+                    } else {
+                        wrong++;
+                    }
+                }
+            });
+            
+            correctCount.textContent = correct;
+            wrongCount.textContent = wrong;
+            attemptedCount.textContent = attempted;
+        }
+        
+        // Update navigation buttons
+        function updateNavigationButtons() {
+            prevBtn.disabled = currentQuestionIndex === 0;
+            nextBtn.disabled = currentQuestionIndex === currentQuestions.length - 1;
+        }
+        
+        // Navigation functions
+        function goToPrevQuestion() {
+            if (currentQuestionIndex > 0) {
+                displayQuestion(currentQuestionIndex - 1);
+            }
+        }
+        
+        function goToNextQuestion() {
+            if (currentQuestionIndex < currentQuestions.length - 1) {
+                displayQuestion(currentQuestionIndex + 1);
+            }
+        }
+        
+        function jumpToQuestion() {
+            const questionNumber = parseInt(jumpInput.value);
+            if (questionNumber && questionNumber >= 1 && questionNumber <= currentQuestions.length) {
+                displayQuestion(questionNumber - 1);
+                jumpInput.value = '';
+            } else if (currentQuestions.length > 0) {
+                alert(`Enter number 1-${currentQuestions.length}`);
+            }
+        }
+        
+        // Go back to home screen
+        function goBackToHome() {
+            const confirmLeave = confirm("Are you sure you want to go back to home? All test progress will be cleared.");
+            if (confirmLeave) {
+                testStarted = false;
+                resetTestData();
+                updateTestState();
+            }
+        }
+        
+        // Show loading state for questions
+        function showLoading(isLoading) {
+            if (isLoading) {
+                questionCard.innerHTML = `
+                    <div class="loading">
+                        <div class="spinner"></div>
+                    </div>
+                `;
+            }
+        }
+        
+        // Show loading state for subject list
+        function showSubjectLoading(isLoading) {
+            if (isLoading) {
+                subjectListContainer.innerHTML = `
+                    <div class="loading">
+                        <div class="spinner"></div>
+                    </div>
+                `;
+            }
+        }
+        
+        // Show error message
+        function showError(message) {
+            questionCard.innerHTML = `
+                <div style="text-align: center; padding: 30px; color: var(--gray);">
+                    <i class="fas fa-exclamation-triangle" style="font-size: 2rem; margin-bottom: 10px;"></i>
+                    <h3>Error</h3>
+                    <p>${message}</p>
+                </div>
+            `;
+        }
+        
+        // Open test selection modal
+        function openTestSelectionModal() {
+            testSelectionModal.classList.add('show');
+            loadAvailableSubjects();
+        }
+        
+        // Close test selection modal
+        function closeTestSelectionModal() {
+            testSelectionModal.classList.remove('show');
+        }
+        
+        // Event Listeners
+        startTestBtn.addEventListener('click', openTestSelectionModal);
+        homeButton.addEventListener('click', goBackToHome);
+        prevBtn.addEventListener('click', goToPrevQuestion);
+        nextBtn.addEventListener('click', goToNextQuestion);
+        jumpBtn.addEventListener('click', jumpToQuestion);
+        
+        jumpInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                jumpToQuestion();
+            }
+        });
+        
+        closeModalBtn.addEventListener('click', closeTestSelectionModal);
+        
+        // Close modal when clicking outside
+        testSelectionModal.addEventListener('click', (e) => {
+            if (e.target === testSelectionModal) {
+                closeTestSelectionModal();
+            }
+        });
+        
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            if (e.target === jumpInput) return;
+            
+            switch(e.key) {
+                case 'ArrowLeft':
+                    e.preventDefault();
+                    goToPrevQuestion();
+                    break;
+                case 'ArrowRight':
+                    e.preventDefault();
+                    goToNextQuestion();
+                    break;
+                case 'Enter':
+                    if (document.activeElement !== jumpInput) {
+                        e.preventDefault();
+                        if (currentQuestionIndex < currentQuestions.length - 1) {
+                            goToNextQuestion();
+                        }
+                    }
+                    break;
+                case '1':
+                case '2':
+                case '3':
+                case '4':
+                case '5':
+                    e.preventDefault();
+                    const optionNumber = parseInt(e.key);
+                    selectAnswer(currentQuestionIndex, optionNumber);
+                    break;
+                case 's':
+                case 'S':
+                    e.preventDefault();
+                    toggleSolution(currentQuestionIndex);
+                    break;
+                case 't':
+                case 'T':
+                    e.preventDefault();
+                    openTestSelectionModal();
+                    break;
+                case 'h':
+                case 'H':
+                    if (testStarted) {
+                        e.preventDefault();
+                        goBackToHome();
+                    }
+                    break;
+                case 'Escape':
+                    if (testSelectionModal.classList.contains('show')) {
+                        closeTestSelectionModal();
+                    } else if (testStarted) {
+                        goBackToHome();
+                    }
+                    break;
+            }
+        });
+        
+        // Auto-focus on jump input when clicked
+        jumpInput.addEventListener('focus', function() {
+            this.select();
+        });
+        
+        // Initialize app
+        document.addEventListener('DOMContentLoaded', () => {
+            // Set initial state
+            updateTestState();
+            
+            // Load available subjects
+            loadAvailableSubjects();
+            
+            // Clear any old test data
+            loadLastTest();
+            
+            // Set focus to body for keyboard shortcuts
+            setTimeout(() => {
+                document.body.focus();
+                document.body.setAttribute('tabindex', '-1');
+            }, 100);
+        });
+    </script>
+</body>
+</html>
